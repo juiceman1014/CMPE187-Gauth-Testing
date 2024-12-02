@@ -19,7 +19,11 @@ driver = webdriver.Remote(
     command_executor="http://127.0.0.1:4723",
     options=options
 )
-print("Session started successfully!")
+print("\nSession started!\n")
+
+passed_tests = 0
+failed_tests = 0
+expected_outputs = ["133feet", "4𝑎+6"]
 
 #onboarding stage
 agree_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/agreeBtn")))
@@ -65,7 +69,7 @@ permission_button.click()
 time.sleep(1)
 
 #pick the image
-select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().resourceId(\"com.education.android.h.intelligence:id/photoPreview\").instance(1)")
+select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({0})')
 select_image_button.click()
 
 #submit the image
@@ -83,19 +87,83 @@ answer_container = WebDriverWait(driver, 10).until(
 child_elements = answer_container.find_elements(AppiumBy.XPATH, ".//*")
 container_text = "".join([child.text for child in child_elements if child.text.strip()])
 container_text = container_text.replace(" ", "")
-print("Answer Container Text: ", container_text)
 
 #check if text container has expected output
-expected_output = "4𝑎+6"
+expected_output = expected_outputs[0]
 if expected_output in container_text:
-    print("Test passed")
+    print("----------------------------")
+    print("Test Case 0 Passed\n")
+    print("Actual: ", container_text, "\n")
+    print("Expected: ", expected_output)
+    print("----------------------------\n")
+    passed_tests+=1
 else:
-    print("Test failed")
+    print("----------------------------")
+    print("Test Case 0 Failed\n")
+    print("Actual: ", container_text, "\n")
+    print("Expected: ", expected_output)
+    print("----------------------------\n")
+    failed_tests+=1
 
 #go back home
 return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().className(\"android.widget.ImageView\").instance(0)")
 return_home_button.click()
 
+#loops through remaining images in album
+for i in range(1,2):
+    #click on image album and provide permissions
+    input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
+    input_image_button.click()
+
+    time.sleep(1)
+
+    #pick the image
+    select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({i})')
+    select_image_button.click()
+
+    #submit the image
+    submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
+    submit_button.click()
+
+    time.sleep(10)
+
+    #grab the answer container
+    answer_container = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((AppiumBy.ID, "com.education.android.h.intelligence:id/answerContentContainer"))
+    )
+
+    #place all elements of the answer_container into a text container.
+    child_elements = answer_container.find_elements(AppiumBy.XPATH, ".//*")
+    container_text = "".join([child.text for child in child_elements if child.text.strip()])
+    container_text = container_text.replace(" ", "")
+
+    #check if text container has expected output
+    expected_output = expected_outputs[i]
+    if expected_output in container_text:
+        print("----------------------------")
+        print(f'Test case {i} passed\n')
+        print("Actual: ", container_text, "\n")
+        print("Expected: ", expected_output)
+        print("----------------------------\n")
+        passed_tests+=1
+    else:
+        print("----------------------------")
+        print(f'Test case {i} failed\n')
+        print("Actual: ", container_text, "\n")
+        print("Expected: ", expected_output)
+        print("----------------------------\n")
+        failed_tests+=1
+
+    #go back home
+    return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().className(\"android.widget.ImageView\").instance(0)")
+    return_home_button.click()
+
+
 time.sleep(5)
+
+print(f'Passed tests: {passed_tests}')
+print(f'Failed tests: {failed_tests}')
+print(f'Pass rate: {passed_tests}/2')
+print(f'Pass percentage: {(passed_tests/2) * 100}%')
 
 driver.quit()
