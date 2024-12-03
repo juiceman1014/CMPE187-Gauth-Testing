@@ -23,7 +23,12 @@ print("\nSession started!\n")
 
 passed_tests = 0
 failed_tests = 0
-expected_outputs = ["133feet", "4𝑎+6"]
+expected_outputs = [
+    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+    "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+    "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
+    "30", "31", "32", "33", "34", "35", "36", "37", "38", "39"
+]
 
 #onboarding stage
 agree_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/agreeBtn")))
@@ -110,15 +115,15 @@ return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSe
 return_home_button.click()
 
 #loops through remaining images in album
-for i in range(1,2):
-    #click on image album and provide permissions
+for i in range(1,40):
+    #click on image album
     input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
     input_image_button.click()
 
     time.sleep(1)
 
     #pick the image
-    select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({i})')
+    select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({i}))')
     select_image_button.click()
 
     #submit the image
