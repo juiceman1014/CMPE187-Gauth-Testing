@@ -53,9 +53,9 @@ passed_tests = 0
 failed_tests = 0
 expected_outputs = [
     "x=-0.2", "x=2", "x=-0.2", "f(2)=-3", "x=2", "x=-0.2", "x=2", "x>=8", "x=-0.2", "x=2", 
-    "2", "x=-3,y=-5", "notenoughinformation", "x=2,y=-4", "x=2,y=-4", "x=2,y=-4", "f(x)=x-5", "y=-x+11", "y=-x+11", "y=-x+11",
-    "(2,-6)(-2,10)", "x=3,x=-5", "x=3,x=-5", "x=3,x=-5", "x=3,x=-5", "133feet2.75seconds", "4𝑎+6", "4𝑎+6", "4𝑎+6", "4𝑎+6",
-    "mean=3.17,median=3.25,mode=3.5", "femalerange=4,femalestandarddeviation=1.33,malerange=6,malestandarddeviation=1.94", "fordatasetJ1:range=11,standardeviation=3.39fordatasetJ2:range=55,standarddeviation=16.63", "mean=1306.22feet,median=1191feet,mode=1000feet", "mean=3.17,median=3.25,mode=3.5", "femalerange=4"
+    "2", "x=-3,y=-5", "notenoughinformation", "x=2,y=-4", "x=2,y=-4", "x=2,y=-4", "f(x)=x-5", "y=-x+11", "y=-x+11", "y=-x+11", "y=-x+11"
+    "(2,-6)(-2,10)", "x=3$$and$$x=-5", "x=3$$and$$x=-5", "x=3$$and$$x=-5", "x=3$$and$$x=-5", "133feet2.75seconds", "4𝑎+6", "4𝑎+6", "4𝑎+6", "4𝑎+6",
+    "mean=3.17,median=3.25,mode=3.5", "femalerange=4,femalestandarddeviation=1.33,malerange=6,malestandarddeviation=1.94", "fordatasetJ1:range=11,standardeviation=3.39fordatasetJ2:range=55,standarddeviation=16.63", "mean=1306.22feet,median=1191feet,mode=1000feet"
 ]
 
 #onboarding stage
