@@ -24,7 +24,7 @@ driver = webdriver.Remote(
 )
 print("\nSession started!\n")
 
-#when all images on current page are processes, scroll to next page.
+#when all images on current page are processed, scroll to next page.
 def swipe_to_next_page():
     touch_action = PointerInput("touch", "touch")
     actions = ActionBuilder(driver, mouse=touch_action)
