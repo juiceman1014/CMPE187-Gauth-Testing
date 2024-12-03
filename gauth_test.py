@@ -59,11 +59,11 @@ expected_outputs = [
 ]
 
 #onboarding stage
-agree_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/agreeBtn")))
+agree_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/agreeBtn")))
 agree_button.click()
 
 for _ in range(4):
-    continue_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btn")))
+    continue_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btn")))
     continue_button.click()
 
 time.sleep(3)
@@ -72,10 +72,10 @@ exit_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector(
 exit_button.click()
 
 #permissions
-permission_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_allow_foreground_only_button")))
+permission_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_allow_foreground_only_button")))
 permission_button.click()
 
-permission_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_deny_button")))
+permission_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_deny_button")))
 permission_button.click()
 
 time.sleep(3)
@@ -85,10 +85,10 @@ math_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector(
 math_button.click()
 
 #click on image album and provide permissions
-input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
+input_image_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
 input_image_button.click()
 
-permission_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_allow_all_button")))
+permission_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.android.permissioncontroller:id/permission_allow_all_button")))
 permission_button.click()
 
 time.sleep(1)
@@ -99,7 +99,7 @@ try:
     select_image_button.click()
 
     #submit the image
-    submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
+    submit_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
     submit_button.click()
 
     time.sleep(10)
@@ -132,11 +132,11 @@ try:
         failed_tests+=1
 except Exception as e:
     expected_output = expected_outputs[0]
-    error_dismiss_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
+    error_dismiss_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
     error_dismiss_button.click()
     print("----------------------------")
     print("Test Case 0 Failed\n")
-    print("Actual: Image is blurry or unclear", "\n")
+    print("Actual: Image is dark or blurry", "\n")
     print("Expected: ", expected_output)
     print("----------------------------\n")
     failed_tests+=1
@@ -148,7 +148,7 @@ finally:
 for i in range(1,35):
     try:
         #click on image album
-        input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
+        input_image_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
         input_image_button.click()
 
         if(i >= 18):
@@ -167,13 +167,13 @@ for i in range(1,35):
             continue
 
         #submit the image
-        submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
+        submit_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
         submit_button.click()
 
         time.sleep(10)
 
         #grab the answer container
-        answer_container = WebDriverWait(driver, 10).until(
+        answer_container = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((AppiumBy.ID, "com.education.android.h.intelligence:id/answerContentContainer"))
         )
 
@@ -200,11 +200,11 @@ for i in range(1,35):
             failed_tests+=1
     except Exception as e:
         expected_output = expected_outputs[i]
-        error_dismiss_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
+        error_dismiss_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
         error_dismiss_button.click()
         print("----------------------------")
         print(f'Test case {i} failed\n')
-        print("Actual: Image is blurry or unclear", "\n")
+        print("Actual: Image is dark or blurry", "\n")
         print("Expected: ", expected_output)
         print("----------------------------\n")
         failed_tests+=1
