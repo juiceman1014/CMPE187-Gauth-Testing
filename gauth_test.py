@@ -73,57 +73,9 @@ permission_button.click()
 
 time.sleep(1)
 
-#pick the image
-select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({0})')
-select_image_button.click()
-
-#submit the image
-submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
-submit_button.click()
-
-time.sleep(10)
-
-#grab the answer container
-answer_container = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((AppiumBy.ID, "com.education.android.h.intelligence:id/answerContentContainer"))
-)
-
-#place all elements of the answer_container into a text container.
-child_elements = answer_container.find_elements(AppiumBy.XPATH, ".//*")
-container_text = "".join([child.text for child in child_elements if child.text.strip()])
-container_text = container_text.replace(" ", "")
-
-#check if text container has expected output
-expected_output = expected_outputs[0]
-if expected_output in container_text:
-    print("----------------------------")
-    print("Test Case 0 Passed\n")
-    print("Actual: ", container_text, "\n")
-    print("Expected: ", expected_output)
-    print("----------------------------\n")
-    passed_tests+=1
-else:
-    print("----------------------------")
-    print("Test Case 0 Failed\n")
-    print("Actual: ", container_text, "\n")
-    print("Expected: ", expected_output)
-    print("----------------------------\n")
-    failed_tests+=1
-
-#go back home
-return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().className(\"android.widget.ImageView\").instance(0)")
-return_home_button.click()
-
-#loops through remaining images in album
-for i in range(1,40):
-    #click on image album
-    input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
-    input_image_button.click()
-
-    time.sleep(1)
-
+try:
     #pick the image
-    select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({i}))')
+    select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({0})')
     select_image_button.click()
 
     #submit the image
@@ -143,25 +95,91 @@ for i in range(1,40):
     container_text = container_text.replace(" ", "")
 
     #check if text container has expected output
-    expected_output = expected_outputs[i]
+    expected_output = expected_outputs[0]
     if expected_output in container_text:
         print("----------------------------")
-        print(f'Test case {i} passed\n')
+        print("Test Case 0 Passed\n")
         print("Actual: ", container_text, "\n")
         print("Expected: ", expected_output)
         print("----------------------------\n")
         passed_tests+=1
     else:
         print("----------------------------")
-        print(f'Test case {i} failed\n')
+        print("Test Case 0 Failed\n")
         print("Actual: ", container_text, "\n")
         print("Expected: ", expected_output)
         print("----------------------------\n")
         failed_tests+=1
-
-    #go back home
+except Exception as e:
+    error_dismiss_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
+    error_dismiss_button.click()
+    print("----------------------------")
+    print("Test Case 0 Failed\n")
+    print("Actual: Image is blurry or unclear", "\n")
+    print("Expected: ", expected_output)
+    print("----------------------------\n")
+    failed_tests+=1
+finally:
     return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().className(\"android.widget.ImageView\").instance(0)")
     return_home_button.click()
+
+#loops through remaining images in album
+for i in range(1,40):
+    try:
+        #click on image album
+        input_image_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/pickAlbum")))
+        input_image_button.click()
+
+        time.sleep(1)
+
+        #pick the image
+        select_image_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, f'new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("com.education.android.h.intelligence:id/photoPreview").instance({i}))')
+        select_image_button.click()
+
+        #submit the image
+        submit_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/btnSubmit")))
+        submit_button.click()
+
+        time.sleep(10)
+
+        #grab the answer container
+        answer_container = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((AppiumBy.ID, "com.education.android.h.intelligence:id/answerContentContainer"))
+        )
+
+        #place all elements of the answer_container into a text container.
+        child_elements = answer_container.find_elements(AppiumBy.XPATH, ".//*")
+        container_text = "".join([child.text for child in child_elements if child.text.strip()])
+        container_text = container_text.replace(" ", "")
+
+        #check if text container has expected output
+        expected_output = expected_outputs[i]
+        if expected_output in container_text:
+            print("----------------------------")
+            print(f'Test case {i} passed\n')
+            print("Actual: ", container_text, "\n")
+            print("Expected: ", expected_output)
+            print("----------------------------\n")
+            passed_tests+=1
+        else:
+            print("----------------------------")
+            print(f'Test case {i} failed\n')
+            print("Actual: ", container_text, "\n")
+            print("Expected: ", expected_output)
+            print("----------------------------\n")
+            failed_tests+=1
+    except Exception as e:
+        error_dismiss_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((AppiumBy.ID, "com.education.android.h.intelligence:id/container")))
+        error_dismiss_button.click()
+        print("----------------------------")
+        print(f'Test case {i} failed\n')
+        print("Actual: Image is blurry or unclear", "\n")
+        print("Expected: ", expected_output)
+        print("----------------------------\n")
+        failed_tests+=1
+    finally:
+        return_home_button = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().className(\"android.widget.ImageView\").instance(0)")
+        return_home_button.click()
 
 
 time.sleep(5)
